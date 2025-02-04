@@ -60,8 +60,9 @@ Base.:+(a::Tropical, b::Tropical) = Tropical(max(a.n, b.n))
 # minimum value of the semiring
 Base.typemin(::Type{Tropical{T}}) where T = Tropical(neginf(T))
 
-# additive identity (zero element)
+# additive identity (zero element) - defined on types
 Base.zero(::Type{Tropical{T}}) where T = typemin(Tropical{T})
+# additive identity (zero element)
 Base.zero(::Tropical{T}) where T = zero(Tropical{T})
 
 # multiplicative identity (one element)
@@ -95,6 +96,11 @@ Task 1: Open a Julia REPL, run the code above, and answer the following question
 2. What is the type and supertype of `Tropical(1.0)`?
 3. Is `Tropical` a concrete type or an abstract type?
 4. Is `Tropical{Real}` a concrete type or an abstract type?
-
+5. Benchmark the performance of Tropical matrix multiplication:
+   ```julia
+   A = rand(Tropical{Float64}, 100, 100)
+   B = rand(Tropical{Float64}, 100, 100)
+   C = A * B   # please measure the time taken
+   ```
 
 Task 2: Implement the Min-Plus Tropical Algebra, where `+` is replaced with `min` and `*` is replaced with `+`.
