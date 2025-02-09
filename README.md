@@ -56,4 +56,4 @@ In the second line, we added the original repository as a remote called `upstrea
    git commit -m 'some messsage'
    git push
    ```
-6. Your homework will be graded after the PR is merged.
+6. (grading) Your homework will be graded after the PR is merged. The default deadline is 2 weeks after the homework is released. The submission order matters. The first one to submit the correct answer will get extra credit.
