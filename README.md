@@ -4,7 +4,6 @@
 This tutorial is mainly based on macOS/Linux/WSL. If you encounter any problems, please feel free to ask for help in the [issue](https://code.hkust-gz.edu.cn/jinguoliu/amat5315courseworks2024/-/issues), our Zulip channel, or wechat TA (Zhongyi Ni).
 
 ### Step 1: Install Git and sign up for a GitHub account
- If you already have Git installed and a GitHub account, you can skip this step.
 Follow the instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to install Git and sign up for GitHub in [here](https://github.com/signup).
 
 ### Step 2: Generate an SSH key
