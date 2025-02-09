@@ -21,8 +21,9 @@ Complete the following steps:
     ```
 3. (download file) Now switch to your local machine and copy the `lscpu.txt` file (at the remote server) to a local directory using `scp`:
     ```bash
-    scp username@server:lscpu.txt path/to/your/local/working/directory
+    scp group1@10.100.0.179:zhongyini/lscpu.txt path/to/your/local/working/directory
     ```
+4. (sample submission) As an example, your final submission should be like: https://github.com/CodingThrust/AMAT5315-2025Spring-Homeworks/pull/2
 
 To submit your homework, please follow the instructions in the [README.md](../README.md) file.
 
