@@ -28,4 +28,8 @@ To submit your homework, please follow the instructions in the [README.md](../RE
 
 ## Task 2: Install Julia
 
-Follow the instructions in the [Julia Setup](http://scfp.jinguo-group.science/chap1-julia/julia-setup.html) to install the Julia programming language. And please bring your laptop to the classroom next time. No worries if you stuck at some steps. The instructor and the TA will help in the hands-on session.
+Follow the instructions in the [Julia Setup](http://scfp.jinguo-group.science/chap1-julia/julia-setup.html) to install the Julia programming language.
+For Windows users, please install Julia in windows subsystem for linux (WSL). Then you should follow the Linux instructions.
+
+Please bring your laptop to the classroom next time.
+No worries if you stuck at some steps. The instructor and the TA will help in the hands-on session.
