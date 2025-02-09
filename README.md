@@ -1,7 +1,7 @@
 # AMAT 5315 - Modern Scientific Computing: Homeworks
 
 ## The workflow to set up the environment
-This tutorial is mainly based on macOS. If you encounter any problems, please feel free to ask for help in the [issue](https://code.hkust-gz.edu.cn/jinguoliu/amat5315courseworks2024/-/issues), our Zulip channel, or wechat TA (Zhongyi Ni).
+This tutorial is mainly based on macOS/Linux/WSL. If you encounter any problems, please feel free to ask for help in the [issue](https://code.hkust-gz.edu.cn/jinguoliu/amat5315courseworks2024/-/issues), our Zulip channel, or wechat TA (Zhongyi Ni).
 
 ### Step 1: Install Git and sign up for a GitHub account
  If you already have Git installed and a GitHub account, you can skip this step.
