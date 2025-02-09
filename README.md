@@ -42,7 +42,7 @@ In the second line, we added the original repository as a remote called `upstrea
    mkdir hw1/zhongyini/  # create a working directory for the homework
    ```
    where `zhongyini` should be replaced by your own name in lower case and `hw1` should be replaced by the correct homework number.
-2. (finish your homework) Finish your homework in this folder.
+2. (finish your homework) Finish your homework in this folder. The homework description is in the `hw1/README.md` file.
 3. (save your work) Commit your changes and push the changes to your remote repository with the following commands:
    ```bash
    git add -A
