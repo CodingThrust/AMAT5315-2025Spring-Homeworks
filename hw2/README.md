@@ -84,7 +84,7 @@ Base.isapprox(x::Tropical, y::Tropical; kwargs...) = isapprox(x.n, y.n; kwargs..
 Base.promote_type(::Type{Tropical{T1}}, b::Type{Tropical{T2}}) where {T1, T2} = Tropical{promote_type(T1,T2)}
 ```
 
-Task 1: Open a Julia REPL, run the code above, and answer the following questions:
+## Task 1: Open a Julia REPL, run the code above, and answer the following questions:
 1. What are the outputs of the following expressions?
     ```julia
     julia> Tropical(1.0) + Tropical(3.0)
@@ -96,11 +96,39 @@ Task 1: Open a Julia REPL, run the code above, and answer the following question
 2. What is the type and supertype of `Tropical(1.0)`?
 3. Is `Tropical` a concrete type or an abstract type?
 4. Is `Tropical{Real}` a concrete type or an abstract type?
-5. Benchmark the performance of Tropical matrix multiplication:
+5. Benchmark and profile the performance of Tropical matrix multiplication:
    ```julia
    A = rand(Tropical{Float64}, 100, 100)
    B = rand(Tropical{Float64}, 100, 100)
    C = A * B   # please measure the time taken
    ```
+   write a brief report on the performance of the tropical matrix multiplication.
 
-Task 2: Implement the Min-Plus Tropical Algebra, where `+` is replaced with `min` and `*` is replaced with `+`.
+## Task 2: Implement the the following semiring algebra over sets:
+
+```math
+\begin{equation}
+\begin{split}
+    s \oplus t &= s \cup t\\
+    s \odot t &= \{\sigma \lor^\circ \tau \, \mid \, \sigma \in s, \tau \in t\}\\
+    \mathbb{0} &= \{\}\\
+    \mathbb{1} &= \{1\},
+\end{split}
+\end{equation}
+```
+where $s$ and $t$ are each a set of integers. Add the following test cases:
+```math
+\begin{equation*}
+\begin{split}
+    &\{2\} \oplus \{5, 4\} = \{5, 4\} \oplus \{2\} = \{2, 4, 5\}\\
+    &\{2\} \oplus \{\} = \{2\}\\
+    &\{2\} \odot \{5, 4\} = \{5, 4\} \odot \{2\} = \{10, 8\}\\
+    &\{2\} \odot \{\} = \{\}\\
+    &\{2\} \odot \{1\} = \{2\}.
+\end{split}
+\end{equation*}
+```
+
+
+
+
