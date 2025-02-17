@@ -98,8 +98,8 @@ Base.promote_type(::Type{Tropical{T1}}, b::Type{Tropical{T2}}) where {T1, T2} = 
 4. Is `Tropical{Real}` a concrete type or an abstract type?
 5. Benchmark and profile the performance of Tropical matrix multiplication:
    ```julia
-   A = rand(Tropical{Float64}, 100, 100)
-   B = rand(Tropical{Float64}, 100, 100)
+   A = Tropical.(rand(100, 100))    # "." means broadcasting the operation into elements
+   B = Tropical.(rand(100, 100))
    C = A * B   # please measure the time taken
    ```
    write a brief report on the performance of the tropical matrix multiplication.
@@ -110,7 +110,7 @@ Base.promote_type(::Type{Tropical{T1}}, b::Type{Tropical{T2}}) where {T1, T2} = 
 \begin{equation}
 \begin{split}
     s \oplus t &= s \cup t\\
-    s \odot t &= \{\sigma \lor^\circ \tau \, \mid \, \sigma \in s, \tau \in t\}\\
+    s \odot t &= \{\sigma \tau \, \mid \, \sigma \in s, \tau \in t\}\\
     \mathbb{0} &= \{\}\\
     \mathbb{1} &= \{1\},
 \end{split}
