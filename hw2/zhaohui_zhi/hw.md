@@ -82,6 +82,84 @@
 
 Source code:
 ```julia
+abstract type AbstractSemiring <: Number end
 
+struct Tropical_Set{T} <: AbstractSemiring where T <: Set
+    n::T
+    Tropical_Set{T}(x) where T = new{T}(T(x))
+    function Tropical_Set(x::T) where T <: Set
+        # if !(T <: Set)
+        #     throw(ArgumentError("T must be a subtype of Set"))
+        # end
+        new{T}(x)
+    end
+    function Tropical_Set{T}(x::Tropical_Set{T}) where T <: Set
+        x
+    end
+    function Tropical_Set{T1}(x::Tropical_Set{T2}) where {T1 <: Set,T2 <: Set}
+        # new is the default constructor
+        new{T1}(T1(x.n))
+    end
+end
+
+Base.in(x, ts::Tropical_Set) = x in ts.n
+Base.union(ts1::Tropical_Set, ts2::Tropical_Set) = Tropical_Set(union(ts1.n, ts2.n))
+
+# customize the print
+Base.show(io::IO, t::Tropical_Set) = Base.print(io, "$(t.n)ₛ")
+
+# multiplication is mapped to element-wise logical or
+
+function Base.:*(a::Tropical_Set, b::Tropical_Set)
+    Tropical_Set(Set(x * y for x in a.n for y in b.n))
+end
+
+# addition is mapped to union
+Base.:+(a::Tropical_Set, b::Tropical_Set) = union(a, b)
+
+# additive identity (zero element)
+Base.zero(::Type{Tropical_Set{T}}) where T = Tropical_Set(Set{T}())
+Base.zero(::Tropical_Set{T}) where T = zero(Tropical_Set{T})
+
+# multiplicative identity (one element)
+Base.one(::Type{Tropical_Set{T}}) where T = Tropical_Set(Set{T}([1]))
+Base.one(::Tropical_Set{T}) where T = one(Tropical_Set{T})
+
+# two numbers are approximately equal. For floating point numbers, this is often preferred to `==` due to the rounding error.
+Base.isapprox(x::Tropical_Set, y::Tropical_Set; kwargs...) = x.n==y.n
+
+# promotion rules
+Base.promote_type(::Type{Tropical_Set{T1}}, b::Type{Tropical_Set{T2}}) where {T1, T2} = Tropical_Set{promote_type(T1,T2)}
+```
+
+
+And the test file:
+```julia
+using Test
+using Random
+using BenchmarkTools
+using Profile
+
+include("Tropical_Max-Plus_Algebra.jl")
+include("Tropical_Sets_Algebra.jl")
+
+A = rand(Tropical{Float64}, 100, 100)
+B = rand(Tropical{Float64}, 100, 100)
+@btime C = A * B # 2.066 ms
+@profile for i in 1:10; A * B; end
+Profile.print(format=:flat,mincount=10)
+
+
+@testset "semiring algebra over sets" begin
+    a=Tropical_Set(Set([2]))
+    b=Tropical_Set(Set([5,4]))
+    set_one=one(Tropical_Set{Int})
+    set_zero=zero(Tropical_Set{Int})
+    @test isapprox(a+b,b+a) & isapprox(a+b,Tropical_Set(Set([2,5,4])))
+    @test isapprox(a+set_zero,a)
+    @test isapprox(a*b, b*a) & isapprox(Tropical_Set(Set([10,8])),a*b)
+    @test isapprox(a*set_zero,set_zero)
+    @test isapprox(a*set_one,a)
+end
 ```
 Also refer to the attached file.
