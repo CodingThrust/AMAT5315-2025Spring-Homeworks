@@ -8,7 +8,8 @@
 2. (Create a package) Following the [guide](https://scfp.jinguo-group.science/chap1-julia/julia-release.html), complete the creation of `MyFirstPackage.jl` and upload the package to your own GitHub account. Requirements:
     - CI/CD setup properly, all tests pass and the test coverage is above 80%.
     - Please submit the GitHub link to the package, rather than the package files.
-    - Warning: please do **not** register your package to the General registry!
+    - Note: In the guide, we implement the Lorenz attractor, you need to change it to the shortest path problem solver that we implemented in the class.
+    - Warning: In the guide, the last step is to register the package to the General registry, please do **not** do that in your homework submission.
 
 3. (Big-$O$ notation) Consider the following Fibonacci function:
     ```julia
