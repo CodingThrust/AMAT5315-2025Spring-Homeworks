@@ -29,3 +29,6 @@
     ```
     What is the time complexity of this function in Big-$O$ notation?
 
+4. (Graph representation) What is the adjacency matrix of the following graph?
+
+   ![](images/house.svg)
