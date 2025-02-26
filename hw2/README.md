@@ -9,6 +9,7 @@ Tropical Max-Plus Algebra is a Semiring algebra. It maps
 Consider the following implementation of the Tropical Max-Plus Algebra:
 
 ```julia
+using Random
 abstract type AbstractSemiring <: Number end
 
 # define the -inf
@@ -82,6 +83,10 @@ Base.isapprox(x::Tropical, y::Tropical; kwargs...) = isapprox(x.n, y.n; kwargs..
 
 # promotion rules
 Base.promote_type(::Type{Tropical{T1}}, b::Type{Tropical{T2}}) where {T1, T2} = Tropical{promote_type(T1,T2)}
+
+function Random.rand(rng::AbstractRNG, ::Random.SamplerType{Tropical{T}}) where T
+    Tropical{T}(rand(rng, T))
+end
 ```
 
 ## Task 1: Open a Julia REPL, run the code above, and answer the following questions:
@@ -110,7 +115,7 @@ Base.promote_type(::Type{Tropical{T1}}, b::Type{Tropical{T2}}) where {T1, T2} = 
 \begin{equation}
 \begin{split}
     s \oplus t &= s \cup t\\
-    s \odot t &= \{\sigma \lor^\circ \tau \, \mid \, \sigma \in s, \tau \in t\}\\
+    s \odot t &= \{\sigma * \tau \, \mid \, \sigma \in s, \tau \in t\}\\
     \mathbb{0} &= \{\}\\
     \mathbb{1} &= \{1\},
 \end{split}
