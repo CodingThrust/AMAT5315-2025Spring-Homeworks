@@ -10,13 +10,14 @@ end
 setzero = Set{Int}()
 setone = Set([1])
 
-# test cases
-@assert ⊕(Set([2]), Set([5,4])) == Set([2,4,5])
-@assert ⊕(Set([5,4]), Set([2])) == Set([2,4,5])
-@assert ⊕(Set([2]), setzero) == Set([2])
-@assert ⊙(Set([2]), Set([5,4])) == Set([10,8])
-@assert ⊙(Set([5,4]), Set([2])) == Set([10,8])
-@assert ⊙(Set([2]), setzero) == Set{Int}()
-@assert ⊙(Set([2]), setone) == Set([2])
 
-println("pass test")
+# test cases
+using Test
+
+@test ⊕(Set([2]), Set([5,4])) == Set([2,4,5])
+@test ⊕(Set([5,4]), Set([2])) == Set([2,4,5])
+@test ⊕(Set([2]), setzero) == Set([2])
+@test ⊙(Set([2]), Set([5,4])) == Set([10,8])
+@test ⊙(Set([5,4]), Set([2])) == Set([10,8])
+@test ⊙(Set([2]), setzero) == Set{Int}()
+@test ⊙(Set([2]), setone) == Set([2])
