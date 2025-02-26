@@ -42,7 +42,7 @@ Base.one(::Type{Tropical_Set{T}}) where T = Tropical_Set(Set{T}([1]))
 Base.one(::Tropical_Set{T}) where T = one(Tropical_Set{T})
 
 # two numbers are approximately equal. For floating point numbers, this is often preferred to `==` due to the rounding error.
-Base.isapprox(x::Tropical_Set, y::Tropical_Set; kwargs...) = x.n==y.n
+Base.:(==)(x::Tropical_Set, y::Tropical_Set; kwargs...) = x.n==y.n
 
 # promotion rules
 Base.promote_type(::Type{Tropical_Set{T1}}, b::Type{Tropical_Set{T2}}) where {T1, T2} = Tropical_Set{promote_type(T1,T2)}

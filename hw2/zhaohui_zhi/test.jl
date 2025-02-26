@@ -18,10 +18,10 @@ Profile.print(format=:flat,mincount=10)
     b=Tropical_Set(Set([5,4]))
     set_one=one(Tropical_Set{Int})
     set_zero=zero(Tropical_Set{Int})
-    @test isapprox(a+b,b+a) & isapprox(a+b,Tropical_Set(Set([2,5,4])))
-    @test isapprox(a+set_zero,a)
-    @test isapprox(a*b, b*a) & isapprox(Tropical_Set(Set([10,8])),a*b)
-    @test isapprox(a*set_zero,set_zero)
-    @test isapprox(a*set_one,a)
+    @test (a+b == b+a) & (a+b == Tropical_Set(Set([2,5,4])))
+    @test a+set_zero == a
+    @test (a*b == b*a) & (Tropical_Set(Set([10,8])) == a*b)
+    @test a*set_zero == set_zero
+    @test a*set_one == a
 end
 

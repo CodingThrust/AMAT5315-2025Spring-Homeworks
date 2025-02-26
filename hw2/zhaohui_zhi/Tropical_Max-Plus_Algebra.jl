@@ -1,3 +1,5 @@
+using Random
+using Test
 abstract type AbstractSemiring <: Number end
 
 # define the -inf

@@ -19,8 +19,12 @@
             AbstractSemiring
    ```
 
-3. Is `Tropical` a concrete type or an abstract type? -> concrete type.
+3. Is `Tropical` a concrete type or an abstract type? -> abstract type.
 4. Is `Tropical{Real}` a concrete type or an abstract type? -> concrete type.
+```julia
+@test isconcretetype(Tropical)==false
+@test isconcretetype(Tropical{Real})==true
+```
 5. ```julia
     using Random
     using BenchmarkTools
@@ -77,6 +81,8 @@
     20         0 ...ulia/stdlib/v1.9/Profile/src/Profile.jl    27 top-level scope
     Total snapshots: 24. Utilization: 100% across all threads and tasks. Use the `groupby` kwarg to break down by thread and/or task.
     ```
+
+We can see that this code spend lots of time at line 47 and line 95 of [Tropical_Sets_Algebra](Tropical_Sets_Algebra.jl), especially doing the macro expansion and defined "+". Such code lack GEMM optimization.
 
 ## Task 2 Answer
 
