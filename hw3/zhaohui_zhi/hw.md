@@ -2,7 +2,7 @@
 
 1. 
    1. The LICENSE of OMEinsum is MIT license。 I can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the source code, but can not do such without copyright notice and this permission notice in all copies or substantial portions of the Software.
-   2. Not, because it's advanced to the compatible version `1`
+   2. Yes, because it's advanced to the compatible version `1`
    3. 89%
 2. [MyFirsrPackage.jl](https://github.com/zzh-cycling/MyFirstPackage.jl)
 3. 
