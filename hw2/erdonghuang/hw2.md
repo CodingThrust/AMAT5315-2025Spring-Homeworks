@@ -168,6 +168,7 @@ Overhead ╎ [+additional indent] Count File:Line; Function
   36╎    ╎    ╎    ╎   38    @LinearAlgebra/src/matmul.jl:898; _generic_matmatmul!(C::Matrix{Tropical{Float64}}, A::Matrix{Tropical{Float64}}, B::Matrix{T…
 Total snapshots: 14665. Utilization: 100% across all threads and tasks. Use the `groupby` kwarg to break down by thread and/or task.
 ```
+Multiplying two 100×100 Tropical{Float64} matrices took approximately 130 ms, with 78 MiB allocated. Profiling shows most time spent in _tropical_mul!, mainly due to type operations and matrix traversal. Optimizations like type stability, in-place updates, and parallelization can significantly improve performance.
 
 ## Task 2
 Implement the the following semiring algebra over sets:
