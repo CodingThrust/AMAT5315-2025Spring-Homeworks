@@ -10,7 +10,7 @@
 
    supertype: AbstractSemiring
 
-3. abstract type
+3. neither concrete type nor abstract type
 
 4. concrete type
 
