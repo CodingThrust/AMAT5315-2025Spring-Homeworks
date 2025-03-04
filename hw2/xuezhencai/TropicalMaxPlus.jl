@@ -26,4 +26,4 @@ using Test
     @test ⊙(Set([2]), setone) == Set([2])
 end
 
-println("All tests passed!")
+println("Tests passed!")
