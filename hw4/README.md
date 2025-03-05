@@ -25,7 +25,7 @@ x_1 + 2 x_2 + 3 x_3 &= 4, \\
 \end{align*}
 ```
 
-2. (Data fitting) Consider the following data set of the new-born population in China. The first column is the year and the second column is the population in 万 ($10^4$). Please use Julia to fit the data with a polynomial of degree 3, i.e., $y = a_0 + a_1 x + a_2 x^2 + a_3 x^3$. Plot the data and predict the population in 2024.
+3. (Data fitting) Consider the following data set of the new-born population in China. The first column is the year and the second column is the population in 万 ($10^4$). Please use Julia to fit the data with a polynomial of degree 3, i.e., $y = a_0 + a_1 x + a_2 x^2 + a_3 x^3$. Plot the data and predict the population in 2024.
     ```
     年份 (year)	人数 (population)
     1990	2374万	 
@@ -82,5 +82,5 @@ x_1 + 2 x_2 + 3 x_3 &= 4, \\
 
     ```
 
-3. (Eigen-decomposition) Find the eigenfrequencies of a 1D chain with fixed boundary. The spring constant between the $i$-th and $(i+1)$-th particles is $C = 3$ and the mass of each particle is $m_e = 1$ on even sites and $m_o = 2$ on odd sites. The chain has $21$ particles.
+4. (Eigen-decomposition) Find the eigenfrequencies of a 1D chain with fixed boundary. The spring constant between the $i$-th and $(i+1)$-th particles is $C = 3$ and the mass of each particle is $m_e = 1$ on even sites and $m_o = 2$ on odd sites. The chain has $21$ particles.
 
