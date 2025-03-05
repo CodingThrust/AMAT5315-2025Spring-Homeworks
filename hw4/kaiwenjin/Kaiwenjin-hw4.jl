@@ -4,7 +4,7 @@ using Optim,Plots,LinearAlgebra
 (a) ill-conditioned
 (b) well-conditioned
 (c) well-conditioned
-(d) well-conditioned
+(d) ill-conditioned
 ```
 
 # 2.
