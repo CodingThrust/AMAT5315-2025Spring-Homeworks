@@ -103,8 +103,8 @@ end
 4. Is `Tropical{Real}` a concrete type or an abstract type?
 5. Benchmark and profile the performance of Tropical matrix multiplication:
    ```julia
-   A = Tropical.(rand(100, 100))    # "." means broadcasting the operation into elements
-   B = Tropical.(rand(100, 100))
+   A = rand(Tropical{Float64}, 100, 100)
+   B = rand(Tropical{Float64}, 100, 100)
    C = A * B   # please measure the time taken
    ```
    write a brief report on the performance of the tropical matrix multiplication.
@@ -115,11 +115,7 @@ end
 \begin{equation}
 \begin{split}
     s \oplus t &= s \cup t\\
-<<<<<<< HEAD
     s \odot t &= \{\sigma * \tau \, \mid \, \sigma \in s, \tau \in t\}\\
-=======
-    s \odot t &= \{\sigma \tau \, \mid \, \sigma \in s, \tau \in t\}\\
->>>>>>> 25c907ed0a0cec01114d87c0fb65f72e4607f616
     \mathbb{0} &= \{\}\\
     \mathbb{1} &= \{1\},
 \end{split}
@@ -137,7 +133,6 @@ where $s$ and $t$ are each a set of integers. Add the following test cases:
 \end{split}
 \end{equation*}
 ```
-
 
 
 
