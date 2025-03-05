@@ -1,35 +1,29 @@
-struct SetSemiring{T}
-    set::Set{T}
-    function SetSemiring(set::Set{T}) where T
-        new{T}(set)
+function ⊕(s::Set{Int}, t::Set{Int})
+    return union(s, t)
+end
+
+function ⊙(s::Set{Int}, t::Set{Int})
+    if isempty(t)
+        return Set{Int}()
+    else
+        return Set([a * b for a in s for b in t])
     end
 end
 
-SetSemiring(x::AbstractVector{T}) where T = SetSemiring(Set(x))
-
-function Base.show(io::IO, s::SetSemiring)
-    elements = sort(collect(s.set))  
-    print(io, "{", join(elements, ", "), "}")
-end
-
-Base.:+(a::SetSemiring{T}, b::SetSemiring{T}) where T = SetSemiring(union(a.set, b.set))
-
-Base.:*(a::SetSemiring{T}, b::SetSemiring{T}) where T = SetSemiring(Set([σ * τ for σ in a.set for τ in b.set]))
-
-Base.zero(::Type{SetSemiring{T}}) where T = SetSemiring(Set{T}())
-Base.zero(a::SetSemiring{T}) where T = zero(SetSemiring{T})
-
-Base.one(::Type{SetSemiring{T}}) where T = SetSemiring(Set{T}([one(T)]))
-Base.one(a::SetSemiring{T}) where T = one(SetSemiring{T})
-
-Base.:(==)(a::SetSemiring{T}, b::SetSemiring{T}) where T = a.set == b.set
-
+setzero = Set{Int}()
+setone = Set([1])
 
 using Test
-@testset "semiring set" begin
-    @test SetSemiring([2]) + SetSemiring([5,4]) == SetSemiring([5,4]) + SetSemiring([2]) ==  SetSemiring([2,5,4])
-    @test SetSemiring([2]) + zero(SetSemiring{Int}) == SetSemiring([2])
-    @test SetSemiring([2]) * SetSemiring([5,4]) == SetSemiring([5,4]) * SetSemiring([2]) == SetSemiring([10,8])
-    @test SetSemiring([2]) * zero(SetSemiring{Int}) == zero(SetSemiring{Int})
-    @test SetSemiring([2]) * SetSemiring([1]) == SetSemiring([2])
+
+@testset "Semiring Algebra Tests" begin
+    @test ⊕(Set([2]), Set([5,4])) == Set([2,4,5])
+    @test ⊕(Set([5,4]), Set([2])) == Set([2,4,5])
+    @test ⊕(Set([2]), setzero) == Set([2])
+    
+    @test ⊙(Set([2]), Set([5,4])) == Set([10,8])
+    @test ⊙(Set([5,4]), Set([2])) == Set([10,8])
+    @test ⊙(Set([2]), setzero) == Set{Int}()
+    @test ⊙(Set([2]), setone) == Set([2])
 end
+
+println("All tests passed!")

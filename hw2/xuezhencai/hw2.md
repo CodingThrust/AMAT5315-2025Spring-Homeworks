@@ -29,12 +29,23 @@ AbstractSemiring
 julia> isconcretetype(Tropical)
 false
 ```
-So it is an **abstract** type.
+### Revision Q3
+```julia
+julia> isabstracttype(Tropical)
+false
+```
+So it is neither an **abstract** type or a **concrete** type.
 
 ### Q4
 ```julia
 julia> isconcretetype(Tropical{Real})
 true
+```
+
+### Revision Q4
+```julia
+julia> isabstracttype(Tropical{Real})
+false
 ```
 So it is a **concrete** type.
 
@@ -129,6 +140,10 @@ Overhead ╎ [+additional indent] Count File:Line; Function
  3╎    ╎    ╎    ╎    ╎ 3  @Base/essentials.jl:796; ifelse
 Total snapshots: 49. Utilization: 100% across all threads and tasks. Use the `groupby` kwarg to break down by thread and/or task.
 ```
+#### Analysis
+Calculation time: The 100 × 100 multiplication of the Tropical matrix takes approximately 3.2 ms.
+Memory allocation: Only 3 allocations were made, totaling approximately 78.1 KiB, indicating a relatively efficient implementation without a large number of temporary object creations.
+
 ## Task2
 ```julia
 function ⊕(s::Set{Int}, t::Set{Int})
