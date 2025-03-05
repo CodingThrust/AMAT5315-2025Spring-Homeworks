@@ -137,5 +137,3 @@ where $s$ and $t$ are each a set of integers. Add the following test cases:
 
 
 
-
-
