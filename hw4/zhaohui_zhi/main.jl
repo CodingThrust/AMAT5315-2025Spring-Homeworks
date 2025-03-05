@@ -40,7 +40,7 @@ C = 3  # example size
 Mat = diagm(1 => C.*ones(n-1)) +  diagm(-1 => C.*ones(n-1)) + diagm(0 => -2C.*ones(n))
 Mat[1, 1] = -C
 Mat[end, end] = -C
-vals, vecs = eigen(Mat)
-plot(vals)
+M = -diagm(vcat(repeat([1, 2],10),1)) 
+vals, vecs = eigen(Mat*inv(M))
 
-@show vals
+@show sqrt.(vals)
