@@ -18,7 +18,7 @@ println(zero(Tropical{Float64}))
 
 
 What is the type and supertype of Tropical(1.0)?
-
+    Tropical{Float64} and  AbstractSemiring
 
 ```julia
 println(typeof(Tropical(1.0)))
@@ -128,6 +128,9 @@ Profile.print(format=:flat,mincount=10)
         53         0 …Njb2RlLXJlbW90ZQ==.jl    21 macro expansion
         53         0 …Njb2RlLXJlbW90ZQ==.jl    21 top-level scope
     Total snapshots: 53. Utilization: 100% across all threads and tasks. Use the `groupby` kwarg to break down by thread and/or task.
+
+The benchmark shows that multiplying two 100x100 Tropical{Float64} matrices takes 2.066 ms with 78.20 KiB memory allocated. Profiling over 10 iterations confirms efficient execution, dominated by core matrix multiplication functions (*, _mul!, etc.), with minimal overhead and no significant bottlenecks.
+
 
 
 # Task 2: Implement the the following semiring algebra over sets:
