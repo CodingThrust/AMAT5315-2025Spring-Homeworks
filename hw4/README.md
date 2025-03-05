@@ -82,5 +82,5 @@ x_1 + 2 x_2 + 3 x_3 &= 4, \\
 
     ```
 
-4. (Eigen-decomposition) Find the eigenfrequencies of a 1D chain with fixed boundary. The spring constant between the $i$-th and $(i+1)$-th particles is $C = 3$ and the mass of each particle is $m_e = 1$ on even sites and $m_o = 2$ on odd sites. The chain has $21$ particles.
+4. (Optional: Eigen-decomposition) Find the eigenfrequencies of a 1D chain with fixed boundary. The spring constant between the $i$-th and $(i+1)$-th particles is $C = 3$ and the mass of each particle is $m_e = 1$ on even sites and $m_o = 2$ on odd sites. The chain has $21$ particles.
 
