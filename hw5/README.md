@@ -10,7 +10,7 @@
 
 3. (BLAS) Improve the forward substitution algorithm (in lecture notes) by using the BLAS level 1 routine `axpy!`. Benchmark the performance of the original algorithm and the improved one.
 
-4. (Optional) Implement the back-substitution algorithm and verify the correctness of the algorithm by solving the following linear system.
+4. (Optional - Back-substitution) Implement the back-substitution algorithm and verify the correctness of the algorithm by solving the following linear system.
    ```math
    U x = b\\
    U = \begin{pmatrix}
