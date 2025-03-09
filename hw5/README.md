@@ -1,15 +1,25 @@
 # Homework
 
-1. Compress the following image to a storage size <100KB with the help of singular value decomposition (SVD) and fast Fourier transform (FFT). The code should be included in the submission.
-
-   ![](corgi.png)
-
-2. Evaluate the multiplication of two polynomials with fast Fourier transform (FFT) and inverse fast Fourier transform (IFFT). The two polynomials are given by
+1. (Fourier transform) Evaluate the multiplication of two polynomials using the `FFTW` package in $O(n \log n)$ time, where $n$ is the degree of the polynomial.
    ```math
    p(x) = 1 + 2x + 3x^2 + 4x^3 + 5x^4 + 6x^5 + 7x^6 + 8x^7 + 9x^8 + 10x^9\\
    q(x) = 10 + 9x + 8x^2 + 7x^3 + 6x^4 + 5x^5 + 4x^6 + 3x^7 + 2x^8 + x^9
    ```
 
-3. Count the Flops of the Householder reflection algorithm.
+2. (Householder reflection) Count the Flops of the Householder reflection algorithm when applied to a matrix $A$ with $1000$ rows and $1000$ columns. Compare it with the Gram-Schmidt algorithm.
 
-4. (Optional) Design a numerical experiment to compare the Householder reflection and the Gram-Schmidt algorithm. Hint: Compare the result obtained from `Float64` and `Float32`.
+3. (BLAS) Improve the forward substitution algorithm (in lecture notes) by using the BLAS level 1 routine `axpy!`. Benchmark the performance of the original algorithm and the improved one.
+
+4. (Optional) Implement the back-substitution algorithm and verify the correctness of the algorithm by solving the following linear system.
+   ```math
+   U x = b\\
+   U = \begin{pmatrix}
+   1 & 2 & 3 \\
+   0 & 4 & 5 \\
+   0 & 0 & 6
+   \end{pmatrix}
+   b = \begin{pmatrix}
+   7 \\ 8 \\ 9
+   \end{pmatrix}
+   ```
+   
