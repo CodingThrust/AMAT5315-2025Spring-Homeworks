@@ -8,7 +8,7 @@
 
 2. (Householder reflection) Count the Flops of the Householder reflection algorithm when applied to a matrix $A$ with $1000$ rows and $1000$ columns. Compare it with the Gram-Schmidt algorithm.
 
-3. (BLAS) Improve the forward substitution algorithm (in lecture notes) by using the BLAS level 1 routine `axpy!`. Benchmark the performance of the original algorithm and the improved one.
+3. (BLAS) Improve the `lufact\_pivot!` function in ScientificComputingDemos/SimpleLinearAlgebra repository by using the BLAS level 1 routine `blascopy!` and `axpy!`. Benchmark the performance of the original algorithm and the improved one.
 
 4. (Optional - Back-substitution) Back-substitution is for solving the upper triangular system. Please implement the back-substitution algorithm and verify the correctness of the algorithm by solving the following linear system.
    ```math
