@@ -3,30 +3,34 @@
 ### (a)
 ```julia
 julia> using LinearAlgebra
-julia> A = [1e10 0; 0 1e-10]
+
+julia> A = [10e10 0; 0 10e-10]
 2×2 Matrix{Float64}:
- 1.0e10  0.0
- 0.0     1.0e-10
+ 1.0e11  0.0
+ 0.0     1.0e-9
+
 julia> condition_number = cond(A)
 1.0e20
 ```
 Compared to 1, A is an **ill-condition** matrix.
 ### (b)
 ```julia
-julia> B = [1e10 0; 0 1e10]
+julia> B = [10e10 0; 0 10e10]
 2×2 Matrix{Float64}:
- 1.0e10  0.0
- 0.0     1.0e10
+ 1.0e11  0.0
+ 0.0     1.0e11
+
 julia> condition_number = cond(B)
 1.0
 ```
 Compared to 1, B is a **well-condition** matrix.
 ### (c)
 ```julia
-julia> C = [1e-10 0; 0 1e-10]
+julia> C = [10e-10 0; 0 10e-10]
 2×2 Matrix{Float64}:
- 1.0e-10  0.0
- 0.0      1.0e-10
+ 1.0e-9  0.0
+ 0.0     1.0e-9
+ 
 julia> condition_number = cond(C)
 1.0
 ```
