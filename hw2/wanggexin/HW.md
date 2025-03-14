@@ -45,7 +45,7 @@ Is `Tropical` a concrete type or an abstract type?
 
 ### A3
 ```julia
-julia> isconcretetype(Tropical)
+julia> isabstracttype(Tropical)
 false
 ```
 
@@ -56,8 +56,8 @@ Is `Tropical{Real}` a concrete type or an abstract type?
 
 ### A4
 ```julia
-julia> isconcretetype(Tropical{Real})
-true
+julia> isabstracttype(Tropical{Real})
+false
 ```
 
 It is a concrete type.
