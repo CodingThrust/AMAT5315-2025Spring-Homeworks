@@ -1,4 +1,4 @@
-# Homework
+# Homework 5
 
 1. (Fourier transform) Evaluate the multiplication of two polynomials using the `FFTW` package in $O(n \log n)$ time, where $n$ is the degree of the polynomial.
    - $$p(x) = 1 + 2x + 3x^2 + 4x^3 + 5x^4 + 6x^5 + 7x^6 + 8x^7 + 9x^8 + 10x^9$$
