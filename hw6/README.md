@@ -44,7 +44,7 @@
    # your code here
    ```
 
-3. (optional) The restarting Lanczos algorithm is a variant of the Lanczos algorithm that is used to compute a few eigenvalues and eigenvectors of a large matrix. Suppose we wish to calculate the largest eigenvalue of a symmetric matrix $A \in \mathbb{C}^{n\times n}$ with the Lanczos method. Let $q_1 \in \mathbb{C}^{n}$ being a normalized vector, the restarting Lanczos algorithm is as follows:
+3. (Optional) The restarting Lanczos algorithm is a variant of the Lanczos algorithm that is used to compute a few eigenvalues and eigenvectors of a large matrix. Suppose we wish to calculate the largest eigenvalue of a symmetric matrix $A \in \mathbb{C}^{n\times n}$ with the Lanczos method. Let $q_1 \in \mathbb{C}^{n}$ being a normalized vector, the restarting Lanczos algorithm is as follows:
 
    1. Generate $q_2,\ldots,q_s \in \mathbb{C}^{n}$ via the Lanczos algorithm.
    2. Form $T_s = ( q_1 \mid \ldots \mid q_s)^T A ( q_1 \mid \ldots \mid q_s)$, an s-by-s matrix.
@@ -52,3 +52,5 @@
    4. Set $q_1^{({\rm new})} = ( q_1 \mid \ldots \mid q_s)u_1$.
 
    Please implement a Lanczos tridiagonalization process with restarting as a Julia function. You submission should include that function as well as a test. 
+
+4. (Challenge) Resolve the following issue in KrylovKit.jl: https://github.com/Jutho/KrylovKit.jl/issues/87 . If you can resolve the issue, please submit a pull request to the repository. If your PR is merged, your final grade will be $A+$.
