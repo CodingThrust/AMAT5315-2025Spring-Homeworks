@@ -19,5 +19,4 @@ U = \begin{pmatrix}
 b = \begin{pmatrix}
 7 \\ 8 \\ 9
 \end{pmatrix}\end{align}
-```math
-   
+```
