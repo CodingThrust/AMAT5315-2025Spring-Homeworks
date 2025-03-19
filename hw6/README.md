@@ -44,11 +44,11 @@
    # your code here
    ```
 
-3. (Optional) The restarting Lanczos algorithm is a variant of the Lanczos algorithm that is used to compute a few eigenvalues and eigenvectors of a large matrix. Suppose we wish to calculate the largest eigenvalue of a symmetric matrix $A \in \mathbb{C}^{n\times n}$ with the Lanczos method. Let $q_1 \in \mathbb{C}^{n}$ being a normalized vector, the restarting Lanczos algorithm is as follows:
+3. (Optional) The restarting Lanczos algorithm is a variant of the Lanczos algorithm that is used to compute a few eigenvalues and eigenvectors of a large matrix. Suppose we wish to calculate the largest eigenvalue of a Hermitian matrix $A \in \mathbb{C}^{n\times n}$ with the Lanczos method. Let $q_1 \in \mathbb{C}^{n}$ being a normalized vector, the restarting Lanczos algorithm is as follows:
 
    1. Generate $q_2,\ldots,q_s \in \mathbb{C}^{n}$ via the Lanczos algorithm.
-   2. Form $T_s = ( q_1 \mid \ldots \mid q_s)^T A ( q_1 \mid \ldots \mid q_s)$, an s-by-s matrix.
-   3. Compute an orthogonal matrix $U = ( u_1 \mid \ldots\mid u_s)$ such that $U^T T_s U = {\rm diag}(\theta_1, \ldots, \theta_s)$ with $\theta_1\geq \ldots \geq\theta_s$.
+   2. Form $T_s = ( q_1 \mid \ldots \mid q_s)^\dagger A ( q_1 \mid \ldots \mid q_s)$, an s-by-s matrix.
+   3. Compute an orthogonal matrix $U = ( u_1 \mid \ldots\mid u_s)$ such that $U^\dagger T_s U = {\rm diag}(\theta_1, \ldots, \theta_s)$ with $\theta_1\geq \ldots \geq\theta_s$.
    4. Set $q_1^{({\rm new})} = ( q_1 \mid \ldots \mid q_s)u_1$.
 
    Please implement a Lanczos tridiagonalization process with restarting as a Julia function. You submission should include that function as well as a test. 
