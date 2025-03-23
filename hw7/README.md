@@ -43,4 +43,5 @@
     sg2 = spin_glass_c(7, 4)
     @test energy(sg2, my_ground_state_solver(sg2)) < -93855  # this is for the challenge
     ```
-    Hint: if you come up with a different algorithm, it also counts!
+    Hint: If you pass the tests, you will get a final score $A^+$.
+    If you come up with a different algorithm, it also counts!
