@@ -1,0 +1,46 @@
+1. Given an anti-ferromagnetic Ising model ($J = 1$) with different graph topology. Complete the following tasks:
+   1. Analyse the spectral gap v.s. at different temperature $T$ from $0.1$ to $5.0$.
+   2. Analyse the spectral gap v.s. the system size $N$ at $T = 0.1$.
+
+   The following graph topologies up to $25$ nodes are considered:
+   - Binary tree
+   - Triangles
+   - Squares
+   - Diamonds
+
+   Hint: use sparse matrices and dominant eigenvalue solver to find the spectral gap!
+
+2. (Challenge) Solve the following spin glass ground state problem through implementing the parallel tempering algorithm.
+   The goal is to pass the following two test cases.
+
+    ```julia
+    using GenericTensorNetworks, GenericTensorNetworks.Graphs
+    using Test
+
+    function strong_product(g1, g2)
+        vs = [(v1, v2) for v1 in vertices(g1), v2 in vertices(g2)]
+        graph = SimpleGraph(length(vs))
+        for (i, vi) in enumerate(vs), (j, vj) in enumerate(vs)
+            if (vi[1] == vj[1] && has_edge(g2, vi[2], vj[2])) ||
+                    (vi[2] == vj[2] && has_edge(g1, vi[1], vj[1])) ||
+                    (has_edge(g1, vi[1], vj[1]) && has_edge(g2, vi[2], vj[2]))
+                add_edge!(graph, i, j)
+            end
+        end
+        return graph
+    end
+    strong_power(g, k::Int) = k == 1 ? g : strong_product(g, strong_power(g, k - 1))
+
+    function spin_glass_c(n::Int, k::Int)
+        g1 = Graphs.cycle_graph(n)
+        g = strong_power(g1, k)
+        coupling = fill(1, ne(g))
+        bias = 1 .- degree(g)
+        return SpinGlass(g, coupling, bias)
+    end
+    sg1 = spin_glass_c(5, 2)
+    @test energy(sg1, my_ground_state_solver(sg1)) == -85  # this is for testing purpose
+    sg2 = spin_glass_c(7, 4)
+    @test energy(sg2, my_ground_state_solver(sg2)) < -93855  # this is for the challenge
+    ```
+    Hint: if you come up with a different algorithm, it also counts!
