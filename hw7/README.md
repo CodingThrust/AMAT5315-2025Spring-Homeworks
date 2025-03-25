@@ -30,16 +30,7 @@
    2. Analyse the spectral gap v.s. the system size $N$ at $T = 0.1$.
 
    The following graph topologies up to $22$ nodes are considered:
-   - Triangles
-   - Squares
-   - Diamonds
-
-    ```julia
-    using Graphs
-    triangles(n::Int) = ...
-    squares(n::Int) = ...
-    diamonds(n::Int) = ...
-    ```
+   ![](images/topologies.svg)
    Hint: use sparse matrices and dominant eigenvalue solver to find the spectral gap!
 
 3. (Challenge) Solve the following spin glass ground state problem through implementing the parallel tempering algorithm.
