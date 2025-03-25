@@ -1,16 +1,48 @@
-1. Given an anti-ferromagnetic Ising model ($J = 1$) with different graph topology. Complete the following tasks:
-   1. Analyse the spectral gap v.s. at different temperature $T$ from $0.1$ to $5.0$.
+1. (Ground state energy) What is the ground state energy of the following anti-ferromagnetic Ising model on the Fullerene graph?
+   ```math
+   H = \sum_{ij \in E} \sigma_i \sigma_j
+   ```
+   where $\sigma_i = \pm 1$ is the spin of the $i$-th site.
+   ![](images/c60.svg)
+
+    The graph topology is constructed by the following code:
+    ```julia
+    julia> using Graphs, ProblemReductions
+    julia> function fullerene()  # construct the fullerene graph in 3D space
+            th = (1+sqrt(5))/2
+            res = NTuple{3,Float64}[]
+            for (x, y, z) in ((0.0, 1.0, 3th), (1.0, 2 + th, 2th), (th, 2.0, 2th + 1.0))
+                for (a, b, c) in ((x,y,z), (y,z,x), (z,x,y))
+                    for loc in ((a,b,c), (a,b,-c), (a,-b,c), (a,-b,-c), (-a,b,c), (-a,b,-c), (-a,-b,c), (-a,-b,-c))
+                        if loc not in res
+                            push!(res, loc)
+                        end
+                    end
+                end
+            end
+            return res
+        end
+    julia> fullerene_graph = UnitDiskGraph(fullerene(), sqrt(5)); # construct the unit disk graph
+    ```
+
+2. (Spectral gap) Given an anti-ferromagnetic Ising model ($J = 1$) with different graph topology. Complete the following tasks:
+   1. Analyse the spectral gap v.s. at different temperature $T$ from $0.1$ to $2.0$.
    2. Analyse the spectral gap v.s. the system size $N$ at $T = 0.1$.
 
-   The following graph topologies up to $25$ nodes are considered:
-   - Binary tree
+   The following graph topologies up to $22$ nodes are considered:
    - Triangles
    - Squares
    - Diamonds
 
+    ```julia
+    using Graphs
+    triangles(n::Int) = ...
+    squares(n::Int) = ...
+    diamonds(n::Int) = ...
+    ```
    Hint: use sparse matrices and dominant eigenvalue solver to find the spectral gap!
 
-2. (Challenge) Solve the following spin glass ground state problem through implementing the parallel tempering algorithm.
+3. (Challenge) Solve the following spin glass ground state problem through implementing the parallel tempering algorithm.
    The goal is to pass the following two test cases.
 
     ```julia
