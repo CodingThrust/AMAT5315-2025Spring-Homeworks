@@ -1,7 +1,7 @@
 1. (Ground state energy) What is the ground state energy of the following anti-ferromagnetic Ising model on the Fullerene graph?
-   ```math
-   H = \sum_{ij \in E} \sigma_i \sigma_j
-   ```
+```math
+H = \sum_{ij \in E} \sigma_i \sigma_j
+```
    where $\sigma_i = \pm 1$ is the spin of the $i$-th site.
    ![](images/c60.svg)
 
