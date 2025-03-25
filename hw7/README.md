@@ -24,6 +24,7 @@ H = \sum_{ij \in E} \sigma_i \sigma_j
      end
  julia> fullerene_graph = UnitDiskGraph(fullerene(), sqrt(5)); # construct the unit disk graph
  ```
+ It is encouraged to use simulated annealing to find the ground state energy.
 
 2. (Spectral gap) Given an anti-ferromagnetic Ising model ($J = 1$) with different graph topology. Complete the following tasks:
    1. Analyse the spectral gap v.s. at different temperature $T$ from $0.1$ to $2.0$.
