@@ -14,7 +14,7 @@ end
 
 Base.:+(Y::SetSemiring{T}, Z::SetSemiring{T}) where T = SetSemiring(union(Y.set, Z.set))
 
-Base.:*(Y::SetSemiring{T}, Z::SetSemiring{T}) where T = SetSemiring(Set([σ * τ for σ in Y.set for τ in Z.set]))
+Base.:*(Y::SetSemiring{T}, Z::SetSemiring{T}) where T = SetSemiring(Set([σ * τ for σ in Y.set, τ in Z.set]))
 
 Base.zero(::Type{SetSemiring{T}}) where T = SetSemiring(Set{T}())
 Base.zero(Y::SetSemiring{T}) where T = zero(SetSemiring{T})
@@ -24,12 +24,11 @@ Base.one(Y::SetSemiring{T}) where T = one(SetSemiring{T})
 
 Base.:(==)(Y::SetSemiring{T}, Z::SetSemiring{T}) where T = Y.set == Z.set
 
-
 using Test
 @testset "semiring set" begin
-    @test SetSemiring([2]) + SetSemiring([5,4]) == SetSemiring([5,4]) + SetSemiring([2]) ==  SetSemiring([2,5,4])
+    @test SetSemiring([2]) + SetSemiring([5,4]) == SetSemiring([2, 4, 5])
     @test SetSemiring([2]) + zero(SetSemiring{Int}) == SetSemiring([2])
-    @test SetSemiring([2]) * SetSemiring([5,4]) == SetSemiring([5,4]) * SetSemiring([2]) == SetSemiring([10,8])
+    @test SetSemiring([2]) * SetSemiring([5,4]) == SetSemiring([10, 8])
     @test SetSemiring([2]) * zero(SetSemiring{Int}) == zero(SetSemiring{Int})
     @test SetSemiring([2]) * SetSemiring([1]) == SetSemiring([2])
 end
