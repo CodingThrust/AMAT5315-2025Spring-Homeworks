@@ -14,7 +14,7 @@ H = \sum_{ij \in E} \sigma_i \sigma_j
          for (x, y, z) in ((0.0, 1.0, 3th), (1.0, 2 + th, 2th), (th, 2.0, 2th + 1.0))
              for (a, b, c) in ((x,y,z), (y,z,x), (z,x,y))
                  for loc in ((a,b,c), (a,b,-c), (a,-b,c), (a,-b,-c), (-a,b,c), (-a,b,-c), (-a,-b,c), (-a,-b,-c))
-                     if loc not in res
+                     if loc ∉ res
                          push!(res, loc)
                      end
                  end
