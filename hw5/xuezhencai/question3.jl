@@ -26,12 +26,15 @@ function lufact_pivot1_improved!(A)
     temp_row = Vector{eltype(A)}(undef, n)
     for k in 1:n-1
         # 选主元
-        pivot = k-1 + argmax(abs.(@view A[k:end, k]))
-        if pivot != k
-            # 使用BLAS.blascopy!交换行
-            BLAS.blascopy!(n, A, pivot, size(A, 1), temp_row, 1)
-            BLAS.blascopy!(n, A, k, size(A, 1), A, pivot, size(A, 1))
-            BLAS.blascopy!(n, temp_row, 1, A, k, size(A, 1))
+        pivot_row = k-1 + argmax(abs.(@view A[k:end, k]))
+        if pivot_row != k
+            # 使用BLAS.blascopy!交换行（修正参数顺序和步长）
+            # 复制源行到临时行
+            BLAS.blascopy!(n, @view(A[pivot_row, :]), 1, temp_row, 1)
+            # 复制当前行到源行位置
+            BLAS.blascopy!(n, @view(A[k, :]), 1, @view(A[pivot_row, :]), 1)
+            # 复制临时行到当前行
+            BLAS.blascopy!(n, temp_row, 1, @view(A[k, :]), 1)
         end
         # 消元（使用BLAS.axpy!）
         for i in k+1:n
@@ -42,6 +45,7 @@ function lufact_pivot1_improved!(A)
     end
     return A
 end
+
 
 # 性能测试
 n = 1000

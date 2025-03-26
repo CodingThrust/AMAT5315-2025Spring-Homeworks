@@ -48,3 +48,39 @@ For improved function:
 ```julia
 506.081 ms (2750 allocations: 3.92 MiB)
 ```
+## 4. Back-substitution
+main
+```julia
+function back_substitution(U, b)
+    n = size(U, 1)
+    x = zeros(n)
+    for i in n:-1:1
+        sum_val = 0.0
+        for j in i+1:n
+            sum_val += U[i, j] * x[j]
+        end
+        x[i] = (b[i] - sum_val) / U[i, i]
+    end
+    return x
+end
+```
+test
+```julia
+using Test
+include("question4.jl")
+
+# 定义矩阵和向量
+U = [1 2 3; 0 4 5; 0 0 6]
+b = [7, 8, 9]
+
+# 计算解
+computed_x = back_substitution(U, b)
+
+# 预期解
+expected_x = [9/4, 1/8, 3/2]
+
+# 测试结果是否匹配
+@test computed_x ≈ expected_x atol=1e-10
+
+println("测试通过！")
+```
