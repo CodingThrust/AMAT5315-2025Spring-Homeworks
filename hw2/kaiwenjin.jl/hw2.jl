@@ -105,7 +105,7 @@ supertype(Tropical{Float64})
 #################################
 # 3.
 
-# Tropical is a abstract type
+# Neither of them.
 
 
 ##################################
