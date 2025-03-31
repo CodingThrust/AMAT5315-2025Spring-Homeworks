@@ -1,6 +1,6 @@
 # Homework 6
 
-1. Please find out the correct values of `rowindices`, `colindices`, and `data` to reproduce the following sparse matrix in CSC format.
+1. (Sparse matrix) Please find out the correct values of `rowindices`, `colindices`, and `data` to reproduce the following sparse matrix in CSC format.
    ```julia
    julia> sp = sparse(rowindices, colindices, data, 5, 5);
 
@@ -36,7 +36,7 @@
    5
    ```
 
-2. The following code generates a random 3-regular graph with $100000$ nodes. Please find out the number of connected components of the graph by diagonalizing the Laplacian matrix of the graph with `KrylovKit.jl`.
+2. (Graph spectral analysis) The following code generates a random 3-regular graph with $100000$ nodes. Please find out the number of connected components of the graph by diagonalizing the Laplacian matrix of the graph with `KrylovKit.jl`.
    ```julia
    using Graphs, Random, KrylovKit
    Random.seed!(42)
