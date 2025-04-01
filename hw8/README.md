@@ -4,9 +4,9 @@
 
     ![](halfadder.png)
 
-2. (Spin dynamics- optional) Use the spin dynamics simulation to find the ground state of the above spin glass problem. Fix the output is $S=0, C=1$, and read out the input spin configuration.
+2. (Spin dynamics - optional) Use the spin dynamics simulation to find the ground state of the above spin glass problem. Fix the output is $S=0, C=1$, and read out the input spin configuration.
 
-3. (Challenge) Optimize the simulated annealing scheduler for tensor network contraction. We implemented multiple algorithms in [OMEinsumContractionOrders.jl](https://github.com/TensorBFS/OMEinsumContractionOrders.jl) to find the optimal contraction order.
+3. (Challenge: Simulated Annealing) Optimize the simulated annealing scheduler for tensor network contraction. We implemented multiple algorithms in [OMEinsumContractionOrders.jl](https://github.com/TensorBFS/OMEinsumContractionOrders.jl) to find the optimal contraction order.
 The simulated annealing based one, `TreeSA`, is the most popular, but is slow. The challenge is to implement a better simulated annealing scheduler with at least 10x speedup and create a PR to merge it.
 The relevant code to improve is here: https://github.com/TensorBFS/OMEinsumContractionOrders.jl/blob/523434dcd671bd35ee31da518b336580c5a7822c/src/treesa.jl#L251-L293 .
     
@@ -28,3 +28,5 @@ The relevant code to improve is here: https://github.com/TensorBFS/OMEinsumContr
 
 [^Pan2021]: Pan, Feng, and Pan Zhang. "Simulating the Sycamore quantum supremacy circuits." arXiv preprint arXiv:2103.03074 (2021).
 [^Shojaee2021]: Shojaee Ghandeshtani, K., Mashhadi, H.R., 2021. An entropy-based self-adaptive simulated annealing. Engineering with Computers 37, 1329–1355. https://doi.org/10.1007/s00366-019-00887-x
+4. (Challenge: Problem reduction) Show elementary cellular automata rule 54 is universal. It is well known that the rule 110 is universal. Rule 54 is also believed to be universal, but no one proved it yet. Ref: https://mathworld.wolfram.com/Rule54.html
+    Hint: through reduction. If you can use rule 54 to simulate rule 110, then rule 54 is universal.
