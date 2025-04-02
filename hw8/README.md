@@ -23,10 +23,10 @@ The relevant code to improve is here: https://github.com/TensorBFS/OMEinsumContr
     │ Space complexity: 2^52.0
     └ Read-write complexity: 2^58.43881862537142, time cost: 85.032489934s
     ```
-    Note: By completing this challenge, you will get a final score $A^+$.
-
 
 [^Pan2021]: Pan, Feng, and Pan Zhang. "Simulating the Sycamore quantum supremacy circuits." arXiv preprint arXiv:2103.03074 (2021).
 [^Shojaee2021]: Shojaee Ghandeshtani, K., Mashhadi, H.R., 2021. An entropy-based self-adaptive simulated annealing. Engineering with Computers 37, 1329–1355. https://doi.org/10.1007/s00366-019-00887-x
 4. (Challenge: Problem reduction) Show elementary cellular automata rule 54 is universal. It is well known that the rule 110 is universal. Rule 54 is also believed to be universal, but no one proved it yet. Ref: https://mathworld.wolfram.com/Rule54.html
     Hint: through reduction. If you can use rule 54 to simulate rule 110, then rule 54 is universal.
+
+Note: By completing any other the challenges, you will get a final score $A^+$.
