@@ -18,8 +18,8 @@ fft_q = fft(q_padded)
 fft_product = fft_p .* fft_q
 product_coeffs = real(ifft(fft_product))
 product_coeffs = product_coeffs[1:2*n-1]
-
-
+@show product_coeffs
+# => product_coeffs = [10.000000000000007, 28.999999999999996, 56.0, 89.99999999999999, 130.0, 175.0, 223.99999999999997, 276.0, 330.0, 385.0, 330.0, 276.0, 224.0, 175.0, 129.99999999999997, 90.0, 55.99999999999999, 29.000000000000007, 10.000000000000021]
 # 2. (Householder reflection)
 
 
