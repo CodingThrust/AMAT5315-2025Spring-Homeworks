@@ -35,3 +35,68 @@ householder_ops = householder_flops(n)
 gram_schmidt_ops = gram_schmidt_flops(m, n)
 println("Householder Reflection FLOPs: ", householder_ops)
 println("Gram-Schmidt FLOPs: ", gram_schmidt_ops)
+
+3.
+using LinearAlgebra
+using BenchmarkTools
+using BLAS
+
+function lufact_pivot!(A)
+    m, n = size(A)
+    for k in 1:min(m, n)
+        pivot = argmax(abs.(A[k:m, k])) + k - 1
+        A[[k, pivot], :] .= A[[pivot, k], :]
+        for j in k+1:m
+            A[j, k] /= A[k, k]
+            A[j, k+1:n] .-= A[j, k] * A[k, k+1:n]
+        end
+    end
+    return A
+end
+
+function lufact_pivot_blas!(A)
+    m, n = size(A)
+    for k in 1:min(m, n)
+        pivot = argmax(abs.(A[k:m, k])) + k - 1
+        A[[k, pivot], :] .= A[[pivot, k], :]
+        for j in k+1:m
+            A[j, k] /= A[k, k]
+            BLAS.axpy!(n-k, -A[j, k], A[k, k+1:n], 1, A[j, k+1:n], 1)
+        end
+    end
+    return A
+end
+
+A = rand(1000, 1000)
+
+A_original = copy(A)
+
+@btime lufact_pivot!($A_original)
+A_blas = copy(A)
+@btime lufact_pivot_blas!($A_blas)
+
+4.
+function back_substitution(U, b)
+    n = length(b)
+    x = zeros(n)
+    
+    for i in n:-1:1
+        sum = 0.0
+        for j in i+1:n
+            sum += U[i, j] * x[j]
+        end
+        x[i] = (b[i] - sum) / U[i, i]
+    end
+    
+    return x
+end
+
+U = [1 2 3; 0 4 5; 0 0 6]
+b = [7, 8, 9]
+
+x = back_substitution(U, b)
+
+println("Solution x: ", x)
+
+println("Verification U * x: ", U * x)
+println("Original b: ", b)
