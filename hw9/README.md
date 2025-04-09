@@ -5,8 +5,17 @@
 2. (Integer programming - optional) Improve the performance of the crystal structure prediction by tuning the integer programming solver SCIP. It is highly recommended to read the thesis [^Achterberg2009] to better understand the [parameters in SCIP](https://scip.zib.de/doc/html/PARAMETERS.php). Try to get a performance improvement of at least 2x. Submit your code and a report of your tuning process.
 
 3. (Challenge: 0-1 programming) Factorize a 350-bit number with the integer programming.
-TODO: generate a random 350-bit number. Show the 60 bit demo.
+    ```bash
+    cd example
+    julia --project=. -e 'using Pkg; Pkg.instantiate();'
+    julia --project=. factoring.jl
+    ```
 Hint: This problem is also known as 0-1 programming. There are some tricks to optimize the 0-1 programming in the thesis [^Achterberg2009].
-One promising direction is to combine branching and the state of the art integer programming solver, such as CPLEX and Gurobi.
+One promising direction is to combine branching and the state of the art integer programming solver, such as CPLEX and Gurobi. 
+Hint: You can use `Primes.jl` to generate prime numbers. For example,
+```julia
+julia> using Primes; prevprime(60)
+59
+```
 
 [^Achterberg2009]: Achterberg, T., 2009. Constraint Integer Programming.
