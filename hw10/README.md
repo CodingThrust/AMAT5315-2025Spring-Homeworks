@@ -1,10 +1,20 @@
 # Homework 10
 1. (Automatic differentiation) Use `FiniteDifferences.jl`, `ForwardDiff.jl` and `Enzyme.jl` to compute the gradient of the following function:
     ```julia
-    function f(x)
-        return sqrt(sum(x.^2))
+    function poor_besselj(ν, z::T; atol=eps(T)) where T
+        k = 0
+        s = (z/2)^ν / factorial(ν)
+        out = s
+        while abs(s) > atol
+            k += 1
+            s *= (-1) / k / (k+ν) * (z/2)^2
+            out += s
+        end
+        out
     end
-    x = collect(Float64, 1:10)
+    z = 2.0
+    ν = 2
+    # obtain the gradient on z w.r.t the output
     ```
 
 2. (Reverse mode AD - Optional) Show the following graph $G=(V, E)$ has a unit-disk embedding.
