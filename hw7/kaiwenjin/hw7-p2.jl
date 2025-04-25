@@ -8,26 +8,26 @@ Random.seed!(42)
 N0 = [18,18,19]
 T = collect(0.1:0.1:2.0)
 energy_gap = zeros(length(T),length(model))
-
+eignum = 20
 for n = 1:3
     N = N0[n]
     for t = 1:length(T)
         A = generate_topology_matrix(N,model[n])
         H = generate_hamiltonian(A,T[t])
-        E,_ = eigsolve(H,normalize(normalize!(rand(2^N))), 10,:SR,KrylovKit.Lanczos())
+        E,_ = eigsolve(H,normalize(normalize!(rand(2^N))), eignum,:LM,KrylovKit.Arnoldi())
         e2 = E[2]   
         flag = false
-        for i in 2:10
-            if abs(E[i]-E[1])>1e-4
+        for i in 2:eignum
+            if abs(E[i]-E[1])>1.0
                 e2 = E[i]
                 flag = true
                 break
             end
         end
         if !flag
-            error("No first excited state found")
+            error("No energy gap found")
         end
-        energy_gap[t,n] = e2 - E[1]
+        energy_gap[t,n] = norm(e2 - E[1])
     end
 end
 
@@ -46,14 +46,13 @@ energy_gap_N = [zeros(length(N1[n])) for n = 1:3]
 for n = 1:3
     for i = 1:length(N1[n])
         N = N1[n][i]
-        @show n,i
         A = generate_topology_matrix(N,model[n])
         H = generate_hamiltonian(A,T1)
-        E,_ = eigsolve(H,normalize(rand(2^N)),5,:SR,KrylovKit.Lanczos())
+        E,_ = eigsolve(H,normalize(rand(2^N)),eignum,:LM,KrylovKit.Arnoldi())
         e2 = E[2]   
         flag = false
-        for i in 2:10
-            if abs(E[i]-E[1])>1e-4
+        for i in 2:eignum
+            if abs(E[i]-E[1])>1.0
                 e2 = E[i]
                 flag = true
                 break
@@ -62,7 +61,7 @@ for n = 1:3
         if !flag
             error("No first excited state found")
         end
-        energy_gap_N[n][i] = e2 - E[1]
+        energy_gap_N[n][i] = norm(e2 - E[1])
     end
 end
 
