@@ -31,7 +31,7 @@ grad_enzyme = autodiff(Enzyme.Reverse, z -> poor_besselj(ν, z), Active, Active(
 
 
 ### 2. (Reverse mode AD - Optional)
-using Enzyme, Optim, LinearAlgebra
+using Enzyme, Optim, LinearAlgebra, Test
 
 vertices = collect(1:10)
 edge = [(1, 2), (1, 3),
@@ -42,29 +42,36 @@ edge = [(1, 2), (1, 3),
          (6, 7), (6, 8), (6, 9),
          (7, 9), (8, 9), (8, 10), (9, 10)]
 
-non_edges = [(u, v) for u in vertices for v in vertices if u < v && !((u, v) in edge || (v, u) in edge)]
+non_edge = [(u, v) for u in vertices for v in vertices if u < v && !((u, v) in edge || (v, u) in edge)]
 
 n = length(vertices)
-pos = rand(2n) .* 2 .- 1  
+pos = rand(2n) .* 0.5 .- 0.25  
 
 
 function loss(pos)
     loss_val = 0.0
+ 
     for (u, v) in edge
         dx = pos[2u-1] - pos[2v-1]
         dy = pos[2u] - pos[2v]
         dist = sqrt(dx^2 + dy^2)
-        loss_val += max(0, dist - 1)^2  
+        loss_val += 100 * max(0, dist - 1)^2  
     end
-    for (u, v) in non_edges
+ 
+    for (u, v) in non_edge
         dx = pos[2u-1] - pos[2v-1]
         dy = pos[2u] - pos[2v]
         dist = sqrt(dx^2 + dy^2)
-        loss_val += max(0, 1 - dist)^2 
+        loss_val += 100 * max(0, 1 - dist)^2 
+    end
+
+    for i in 1:n
+        x, y = pos[2i-1], pos[2i]
+        r = sqrt(x^2 + y^2)
+        loss_val += 10 * max(0, r - 1)^2  
     end
     return loss_val
 end
-
 
 function grad_loss!(grad, pos)
     grad .= 0.0
@@ -73,24 +80,32 @@ function grad_loss!(grad, pos)
 end
 
 
-result = optimize(loss, grad_loss!, pos, LBFGS(), Optim.Options(show_trace=true))
+result = optimize(loss, grad_loss!, pos, LBFGS(),
+                  Optim.Options(show_trace=true, iterations=2000, g_tol=1e-10))
 
 optimized_pos = Optim.minimizer(result)
-
 embedding = [(optimized_pos[2i-1], optimized_pos[2i]) for i in 1:n]
 
-println("Unit-disk embedding coordinates:")
-for (i, (x, y)) in enumerate(embedding)
-    println("Vertex $i: ($x, $y)")
-end
-# => Vertex 1: (-0.8532574888909433, -1.174855295266971)
-# => Vertex 2: (-0.3534104153471856, -0.5497262048359522)
-# => Vertex 3: (-0.19971612104417055, -0.5766394659296381)
-# => Vertex 4: (-0.16334541907617486, 0.664101319631093)
-# => Vertex 5: (0.11931392109423278, -0.33241913855988153)
-# => Vertex 6: (0.558538751081, -0.4541770060704471)
-# => Vertex 7: (0.6954316145953644, 0.4550533346044638)
-# => Vertex 8: (0.43972758792992045, -0.19040581275096352)
-# => Vertex 9: (0.4500454104745883, 0.043107608004893806)
-# => Vertex 10: (-0.7076849765587815, 0.17768557787584624)
 
+function distance(u, v, embedding)
+    dx = embedding[u][1] - embedding[v][1]
+    dy = embedding[u][2] - embedding[v][2]
+    return sqrt(dx^2 + dy^2)
+end
+
+
+
+
+@testset "Unit-disk embedding validation" begin
+    edge_tolerance = 0.05
+    non_edge_tolerance = 0.05
+    for (u, v) in edge
+        dist = distance(u, v, embedding)
+        @test dist ≤ 1 + edge_tolerance
+    end
+    # Check all non-edges are ≥ 1 - tolerance
+    for (u, v) in non_edge
+        dist = distance(u, v, embedding)
+        @test dist ≥ 1 - non_edge_tolerance
+    end
+end
