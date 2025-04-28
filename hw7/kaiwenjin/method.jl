@@ -121,14 +121,15 @@ function generate_diamonds(n_vertices::Int)
 	return A
 end
 
-function generate_hamiltonian(A::SparseMatrixCSC, t::Float64)
+function generate_hamiltonian(A::SparseMatrixCSC, t::T) where T <: Real
 	n = size(A, 1)
 	N = 2^n
 	state2num = [2^(i - 1) for i in 1:n]
 
-	idx_i = Vector{Int}(undef, N * n)
-	idx_j = Vector{Int}(undef, N * n)
-	values = Vector{Float64}(undef, N * n)
+	idx_i = Vector{Int}(undef, N * (n+1))
+	idx_j = Vector{Int}(undef, N * (n+1))
+	values = Vector{T}(undef, N * (n+1))
+    dH = zeros(T,N)
 
 	function _prob(state::Vector, flip_idx::Int)
 		state1 = 2 * state .- 1
@@ -141,6 +142,7 @@ function generate_hamiltonian(A::SparseMatrixCSC, t::Float64)
 
 	@inbounds for i in 0:N-1
 		i1 = i
+        idx_i[n * N + i + 1] = idx_j[n * N + i + 1] = i+1
 		for j in 1:n
 			state[j] = i1 & 1
 			i1 = i1 >> 1
@@ -154,9 +156,11 @@ function generate_hamiltonian(A::SparseMatrixCSC, t::Float64)
 			idx_i[idx+1] = i + 1
 			idx_j[idx+1] = i2 + 1
 			values[idx+1] = _prob(state, j)
+			dH[i2+1] += values[idx+1]
 			idx += 1
 		end
 	end
-
-	return sparse(idx_i, idx_j, values, N, N)
+    values[n*N+1:end] .= 1 .- dH/n
+    values[1:n*N] .= values[1:n*N] ./ n
+    return sparse(idx_i, idx_j, values, N, N)
 end
