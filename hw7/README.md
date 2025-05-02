@@ -1,3 +1,5 @@
+# Homework 7
+
 1. (Ground state energy) What is the ground state energy of the following anti-ferromagnetic Ising model on the Fullerene graph?
 ```math
 H = \sum_{ij \in E} \sigma_i \sigma_j
@@ -30,7 +32,7 @@ H = \sum_{ij \in E} \sigma_i \sigma_j
    1. Analyse the spectral gap v.s. at different temperature $T$ from $0.1$ to $2.0$.
    2. Analyse the spectral gap v.s. the system size $N$ at $T = 0.1$.
 
-   The following graph topologies up to $22$ nodes are considered:
+   The following graph topologies up to $18$ nodes are considered:
    
    ![](images/topologies.svg)
    
