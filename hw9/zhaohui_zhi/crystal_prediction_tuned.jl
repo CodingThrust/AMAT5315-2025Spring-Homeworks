@@ -3,29 +3,38 @@ using CairoMakie, SCIP
 using BenchmarkTools
 
 # paras=Dict([])
-paras=Dict([ 
-    ("limits/time",3600),          # 时间限制1小时
-            ("parallel/maxnthreads", 
-            # Threads.nthreads(),
-            4),     # Use available Julia threads
-            
-            # 启发式策略
-            ("heuristics/subnlp/presolveemphasis", 1),  # 激进启发式
-            ("heuristics/rounding/freq", -1),       # 禁用低效启发式
-            ("heuristics/rens/freq",  -1),          # 增强邻域搜索
-            
-            # 分支策略
-           ( "branching/pscost/priority", 9999),    # 伪成本分支优先 #default 2000
-            ("branching/inference/priority", 1),     # 辅助推断分支
-            #default: 1000
-            # 割平面
-            ("separating/clique/freq", -1),          # 禁用clique割
-            ("separating/gomory/freq", 5),          # Gomory割频率
-            
-            # 数值稳定性
-           ( "numerics/feastol", 1e-4),            # 松弛可行性容忍度
-           ("memory/savefac", 0.5),
-           ])
+paras = Dict([
+    # 核心控制
+    ("presolving/maxrestarts", 0),            # 禁用自动重启
+    ("propagating/obbt/freq", -1),            # 关闭耗时OBBT传播
+    ("constraints/countsols/collect", 1),     # 增强解计数分析
+    
+    # 对称性处理
+    ("propagating/symmetry/priority", 10000),                   # 启用强对称处理
+    ("propagating/symmetry/freq", 10),            
+    
+    # 分支策略优化
+    ("branching/relpscost/priority", 5000),   # 可靠性伪成本分支
+    ("branching/vanillafullstrong/idempotent", false),# 完全强分支缓存
+    
+    # 割平面强化
+    ("separating/clique/freq", 10),           # 启用clique割
+    ("separating/zerohalf/freq", 5),          # 零半割加强
+    ("separating/gomory/freq", 3),            # 更积极的Gomory割
+    
+    # 启发式优化
+    ("heuristics/undercover/freq", 20),       # 覆盖式启发
+    ("heuristics/proximity/freq", 15),        # 邻近搜索
+    ("heuristics/shifting/freq", 10),         # 增强位移启发
+    
+    # LP求解优化
+    # ("lp/resolvealgorithm", "b"),             # 屏障法解初始LP
+    ("lp/threads", 2),                        # 限制LP线程避免争抢
+    
+    # 数值稳定性
+    ("numerics/feastol", 1e-6),               # 恢复默认精度
+    ("numerics/lpfeastolfactor", 1e-3)              # 加强LP精度
+])
 # Run the crystal structure prediction, alpha is the Ewald parameter
 
 function myoptimize_linear(interaction,
@@ -101,7 +110,7 @@ function run_crystal_structure_prediction(grid_size, populations, lattice; use_q
     else
         # Solve with the linear formulation
         # @info "Solving linear optimization problem..."
-        res = myoptimize_linear(ion_list, populations, lattice; optimizer=SCIP.Optimizer, optimizer_options=paras) do ion_a, ion_b, lattice
+        res = optimize_linear(ion_list, populations, lattice; optimizer=SCIP.Optimizer, optimizer_options=paras) do ion_a, ion_b, lattice
             interaction_energy(ion_a, ion_b, lattice, alpha, depth, depth, depth)
         end
     end
@@ -208,4 +217,4 @@ end
 
 @btime run_SrTiO3_prediction()
 # Initial 408.549 ms (268006 allocations: 21.76 MiB)
-# After tuning  1.000 ms (1 allocation: 2.44 KiB)
+# After tuning 190.641 ms (267354 allocations: 21.74 MiB)
