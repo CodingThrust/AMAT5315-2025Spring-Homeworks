@@ -1,0 +1,9 @@
+[deps]
+Arpack = "7d9fca2a-8960-54d3-9f78-7d1dccf2cb97"
+GenericTensorNetworks = "3521c873-ad32-4bb4-b63d-f4f178f42b49"
+GraphPlot = "a2cc645c-3eea-5389-862e-a155d0052231"
+Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+OMEinsum = "ebe7aa44-baf0-506c-a96f-8464559b3922"
+ProblemReductions = "899c297d-f7d2-4ebf-8815-a35996def416"
+TensorInference = "c2297e78-99bd-40ad-871d-f50e56b81012"
+TropicalNumbers = "b3a74e9c-7526-4576-a4eb-79c0d4c32334"
