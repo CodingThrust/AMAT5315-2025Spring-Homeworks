@@ -61,38 +61,13 @@ state, checkpoints = simulate_bifurcation!(initial_state, bifurcation_model; nst
 println(checkpoints[end].state.x)
 @show "x=" checkpoints[end].state.x[x_idx]
 @show "y=" checkpoints[end].state.x[y_idx]
-@show "s=" checkpoints[end].state.x[s_idx]
 @show "c=" checkpoints[end].state.x[c_idx]
-# The GS is xysc=1010
+@show "s=" checkpoints[end].state.x[s_idx]
+# The GS is xycs=0000, 1001, 0101, 1110, four degenerate states
 
 # Fix the output S=0, C=1
 
-h= Float64.(SG.h)
-
-h[s_idx]=-1e3
-h[c_idx]=1e3
-
-
-initial_scale = 0.1 
-# initial_x = randn(N) .* initial_scale # Initial state for the x and y variables
-initial_x= randn(N) .* initial_scale
-initial_p = randn(N) .* initial_scale
-initial_state = SimulatedBifurcationState(initial_x, initial_p)
-
-
-bifurcation_model = SimulatedBifurcation{:aSB}(graph,h, J, c0=c0)
-
-
-nsteps = 10000
-dt = 0.01
-state, checkpoints = simulate_bifurcation!(initial_state, bifurcation_model; nsteps=nsteps, dt=dt,  checkpoint_steps=5)
-
-println(checkpoints[end].state.x)
-@show "x=" checkpoints[end].state.x[x_idx]
-@show "y=" checkpoints[end].state.x[y_idx]
-@show "s=" checkpoints[end].state.x[s_idx]
-@show "c=" checkpoints[end].state.x[c_idx]
-#The input x=0, y=1
+#The input x=1, y=1
 
 # ground_state = read_config(solve(SG, SingleConfigMin())[])
 # @info "Ground state configuration: $(ground_state)"
