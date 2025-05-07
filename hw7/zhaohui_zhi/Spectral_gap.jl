@@ -81,7 +81,7 @@ function spectral_gap(P)
 end
 
 #====#
-graphtri=triangles(9,2)
+graphtri=triangle(9,2)
 graphsq=squares(9,2)
 graphdi=diamonds(6,3)
 
@@ -101,7 +101,7 @@ for (idx,i) in enumerate(templis)
     gaptri=spectral_gap(Ptri)
     gapsq=spectral_gap(Psq)
     gapdi=spectral_gap(Pdi)
-    println("triangles spectral gap=",gaptri)
+    println("triangle spectral gap=",gaptri)
     println("squares spectral gap=",gapsq)
     gaplistri[idx]=gaptri
     gaplissq[idx]=gapsq
@@ -115,13 +115,18 @@ plot!(templis, gaplisdi, label="diamonds")
 savefig(fig, "./spectral_gap_vs_beta.pdf")
 #====#
 
-Nlis=collect(2:6)
+Nlis1=collect(2:6)
+Nlis=collect(2:9)
+plotNlis=collect(4:2:18)
+plotNlis1=collect(7:3:19)
 beta=0.1
 gapNlistri=zeros(length(Nlis))
 gapNlissq=zeros(length(Nlis))
-gapNlisdi=zeros(length(Nlis))
-for (idx, i) in enumerate(Nlis)
-    graphtri=triangles(i,2)
+gapNlisdi=zeros(length(Nlis1))
+
+
+for (idx, i) in enumerate(Nlis2)
+    graphtri=triangle(i,2)
     graphsq=squares(i,2)
     graphdi=diamonds(i,3)
 
@@ -140,13 +145,14 @@ for (idx, i) in enumerate(Nlis)
     println("triangles spectral gap=",gaptri)
     println("squares spectral gap=",gapsq)
     println("diamonds spectral gap=",gapdi)
-    gapNlistri[idx]=gaptri
-    gapNlissq[idx]=gapsq
+    gapNlistri[idx+5]=gaptri
+    gapNlissq[idx+5]=gapsq
     gapNlisdi[idx]=gapdi
 end
 
 save("gapNlis.jld", "gaptri", gapNlistri, "gapsq", gapNlissq, "gapdi", gapNlisdi)
-fig=plot(Nlis, gapNlistri, label="triangles", xlabel="N", ylabel="Spectral gap", legend=:topleft)
+
+fig=plot(Nlis, gapNlistri, label="triangles", xlabel="N", ylabel="Spectral gap", xticks=collect(4:2:18), legend=:topleft)
 plot!(Nlis, gapNlissq, label="squares")
 plot!(Nlis, gapNlisdi, label="diamonds")
 savefig(fig, "./spectral_gap_vs_N.pdf")
