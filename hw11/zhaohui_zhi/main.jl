@@ -1,8 +1,11 @@
+using Pkg
+Pkg.activate("./hw11/zhaohui_zhi")
 using OMEinsum
 using Test
 using LinearAlgebra
 using HiddenMarkovModel
 using Test
+
 A=randn(4,4)
 v=collect(1.0:4)
 
