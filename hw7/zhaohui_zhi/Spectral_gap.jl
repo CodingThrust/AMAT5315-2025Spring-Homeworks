@@ -152,7 +152,7 @@ end
 
 save("gapNlis.jld", "gaptri", gapNlistri, "gapsq", gapNlissq, "gapdi", gapNlisdi)
 
-fig=plot(Nlis, gapNlistri, label="triangles", xlabel="N", ylabel="Spectral gap", xticks=collect(4:2:18), legend=:topleft)
-plot!(Nlis, gapNlissq, label="squares")
-plot!(Nlis, gapNlisdi, label="diamonds")
+fig=plot(plotNlis, gapNlistri, label="triangles", xlabel="N", ylabel="Spectral gap", xticks=collect(4:2:18), legend=:topleft)
+plot!(plotNlis, gapNlissq, label="squares")
+plot!(plotNlis1, gapNlisdi, label="diamonds")
 savefig(fig, "./spectral_gap_vs_N.pdf")
