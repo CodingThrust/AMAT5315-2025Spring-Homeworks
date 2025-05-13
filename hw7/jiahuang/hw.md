@@ -67,18 +67,18 @@ sg1 PA Result Energy: -66.0
 
 2. (Spectral gap) Given an anti-ferromagnetic Ising model ($J = 1$) with different graph topology. Complete the following tasks:
    1. Analyse the spectral gap v.s. at different temperature $T$ from $0.1$ to $2.0$.
-    ![](spectral_gap_vs_T_N8_corrected.png)
+    ![](spectral_gap_vs_beta.png)
    2. Analyse the spectral gap v.s. the system size $N$ at $T = 0.1$.
-    ![](spectral_gap_vs_N_T0.1.png)
+    ![](spectral_gap_vs_N.png)
 
-    code in Spectral.jl
+    code in hw7-2.jl
 
 4. (Challenge) Solve the following spin glass ground state problem through implementing the parallel tempering algorithm.
 
 ### Answer
 ```text
  Population Annealing Solver was try but cann't get the target minimal energy.
- The minimum capability value obtained is -93849.0, config as in file pa_sg2_7_4_E-93849.0000_beta3.175_step1932.txt.
+ The minimum capability value obtained is -93849.0 > -93855, config as in file pa_sg2_7_4_E-93849.0000_beta3.175_step1932.txt.
 
  Code in file : MC_population_annealing.jl
  ```
