@@ -15,14 +15,18 @@ sp = sparse(rowindices, colindices, data; m = 5, n = 5)   # 用关键词，更�
 using Graphs, Random, KrylovKit, SparseArrays, LinearAlgebra
 
 Random.seed!(42)
-g = random_regular_graph(100_000, 3)
+g = random_regular_graph(100000, 3)
 
-A = adjacency_matrix(g)
-d = vec(sum(A, dims = 2))
-L = spdiagm(0 => d) - A                # 稀疏对角矩阵，避免密集 Diagonal
+A = adjacency_matrix(g)  
+D = Diagonal(vec(sum(A, dims=2)))  
+L = D - A  
 
-eigvals = eigsolve(L, 10, :SR; tol = 1e-7)[1]  # 只要特征值
-num_connected_components = count(abs.(eigvals) .< 1e-8)     # 更严格阈值
+vals, _ = eigsolve(L, 10, :SR)  
+
+num_connected_components = count(x -> abs(x) < 1e-4, vals)
+# => 1
+
+
 
 ############################################################
 # 3. Restarting Lanczos（细节修正 + 轻量提速）
