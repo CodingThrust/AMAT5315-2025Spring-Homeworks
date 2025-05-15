@@ -36,6 +36,50 @@ gram_schmidt_ops = gram_schmidt_flops(m, n)
 println("Householder Reflection FLOPs: ", householder_ops)
 println("Gram-Schmidt FLOPs: ", gram_schmidt_ops)
 
+
+using Random
+using LinearAlgebra
+
+# Householder反射算法实现
+function householder_reflection(A)
+    m, n = size(A)
+    flops = 0  # FLOP计数器
+
+    for k in 1:n
+        x = A[k:m, k]
+        e = zeros(length(x))
+        e[1] = norm(x) * sign(x[1])  # 计算范数并考虑符号
+        v = x - e
+        
+        # 计算v的L2范数
+        v_norm = norm(v)
+        flops += 2 * (m - k + 1)  # norm的计算（m-k+1次平方和，1次平方根）
+
+        # 更新矩阵
+        A[k:m, k:n] -= 2 * (v * (v' * A[k:m, k:n]))
+        flops += 2 * (m - k + 1) * (n - k) + 3 * (m - k + 1)  # 2次矩阵乘法和1次标量乘法
+    end
+
+    return A, flops
+end
+
+# 创建一个1000x1000的随机矩阵
+A = rand(1000, 1000)
+
+# 计算Householder反射的FLOP
+_, householder_flops = householder_reflection(copy(A))  # 使用copy避免修改原矩阵
+
+# 计算Gram-Schmidt的FLOP
+_, gram_schmidt_flops = gram_schmidt(copy(A))
+
+# 输出FLOP计数
+println("Householder reflection FLOPS: ", householder_flops)
+println("Gram-Schmidt FLOPS: ", gram_schmidt_flops)
+
+
+
+
+
 3.
 using LinearAlgebra
 using BenchmarkTools
