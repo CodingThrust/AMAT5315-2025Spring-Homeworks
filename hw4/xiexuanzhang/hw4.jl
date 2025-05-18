@@ -111,3 +111,37 @@ predicted_population = polynomial_model(optimized_coeffs, [year_2024])[1]
 println("The predicted population in 2024 is: ", predicted_population)
 
 4.
+using LinearAlgebra
+
+# Define system parameters
+N = 21               # Number of particles in the chain
+C = 3.0              # Spring constant between adjacent particles
+m_e = 1.0            # Mass of particles at even positions
+m_o = 2.0            # Mass of particles at odd positions
+
+# Create mass array with alternating particle masses
+masses = [isodd(i) ? m_o : m_e for i in 1:N]
+# Construct diagonal mass matrix M
+M = Diagonal(masses)
+
+# Build tridiagonal stiffness matrix K
+sub_diag = -C * ones(N - 1)    # Subdiagonal elements
+diag = 2C * ones(N)           # Main diagonal elements
+super_diag = -C * ones(N - 1)  # Superdiagonal elements
+K = Tridiagonal(sub_diag, diag, super_diag)
+
+# Solve generalized eigenvalue problem: K * v = λ * M * v
+eigen_result = eigen(K, M)
+eigenvalues = eigen_result.values
+
+# Calculate eigenfrequencies: ω = √(λ)
+eigenfrequencies = sqrt.(real(eigenvalues))
+
+# Sort eigenfrequencies in ascending order
+sorted_eigenfrequencies = sort(eigenfrequencies)
+
+# Display results
+println("Eigenfrequencies of the 1D chain:")
+for (i, freq) in enumerate(sorted_eigenfrequencies)
+    println("ω$i = $(round(freq, digits=4))")
+end
