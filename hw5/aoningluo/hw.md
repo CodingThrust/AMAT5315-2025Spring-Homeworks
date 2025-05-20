@@ -5,9 +5,9 @@ Resulting polynomial coefficients: [10.0, 29.0, 56.0, 90.0, 130.0, 175.0, 224.0,
 
 ```
 2.
-Householder Reflection FLOPs: 1001000000
-Gram-Schmidt FLOPs: 1002001000
-According to the number of FLOPs, the Householder reflection algorithm is a little faster than the Gram-Schmidt algorithm.
+Householder Reflection FLOPs: 1330000000
+Gram-Schmidt FLOPs: 2000000000
+According to the number of FLOPs, the Householder reflection algorithm is faster than the Gram-Schmidt algorithm.
 ```
 
 ```

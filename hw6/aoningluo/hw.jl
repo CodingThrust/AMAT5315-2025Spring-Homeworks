@@ -16,6 +16,3 @@ L = laplacian_matrix(g)
 eigvals, eigvecs = eigsolve(L, 10, :SR)
 num_connected_components = count(x -> x == 0, eigvals)
 println("Number of connected components: ", num_connected_components)
-
-3.
-
