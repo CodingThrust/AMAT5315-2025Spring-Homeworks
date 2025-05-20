@@ -1,13 +1,11 @@
 using Random
 
-# 定义半加器电路的SAT问题
 function half_adder_sat(A, B)
     S = A ⊻ B  
     C = A & B    
     return S, C
 end
 
-# 定义能量函数
 function energy(A, B, S, C)
     E = 0
     if A == 0 && B == 0 && S == 1
