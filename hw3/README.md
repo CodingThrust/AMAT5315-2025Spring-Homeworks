@@ -1,4 +1,4 @@
-# Homework
+# Homework 3
 
 1. (Version and CI/CD) Consider the following Julia package `OMEinsum.jl`: https://github.com/under-Peter/OMEinsum.jl, which is a package for optimizing tensor contractions. The package is registered in the General registry. Please answer the following questions:
     1. What is the LICENSE of OMEinsum? As a user, what can you do and cannot do with OMEinsum's source code?
