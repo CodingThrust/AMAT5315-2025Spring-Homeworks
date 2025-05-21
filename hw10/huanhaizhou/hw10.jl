@@ -1,9 +1,12 @@
+using Pkg
+Pkg.activate("./hw10/huanhaizhou")
+Pkg.instantiate()
+
 using Enzyme
 using FiniteDifferences
 using ForwardDiff
-using Ipopt
 using Optim
-using Optimization, OptimizationMOI, OptimizationOptimJL, Ipopt
+using Test
 
 # Problem 1
 function poor_besselj(ν, z::T; atol=eps(T)) where T
@@ -35,27 +38,55 @@ edges = [(1, 2), (1, 3),
 	(6, 7), (6, 8), (6, 9),
 	(7,9), (8, 9), (8, 10), (9, 10)]
 
-all_pairs = collect([(i, j) for i in 1:10 for j in i+1:10])
+disjoint_edges = setdiff(collect([(i, j) for i in 1:10 for j in i+1:10]), edges)
 
-disconnect_edges = setdiff(all_pairs, edges)
-
-@inline relu(x) = max(x, 0)
-
-@inline norm2(x::Tuple{T, T}) where T = x[1]^2 + x[2]^2
-
-Base.:(-)(a::Tuple{T, T}, b::Tuple{T, T}) where T = (a[1] - b[1], a[2] - b[2])
-
-function UDG_embedding_loss(coordinates::Vector{Tuple{T, T}}) where T
-    loss = 0
-    for edge in edges
-        loss += relu(norm2(coordinates[edge[1]] - coordinates[edge[2]]) - 1)
-    end
-    
-    for edge in disconnect_edges
-        loss += relu(1 - norm2(coordinates[edge[1]] - coordinates[edge[2]]))
-    end
-    loss
+@inline function distance(ux::T, uy::T, vx::T, vy::T) where T <: Real
+    return sqrt((ux - vx)^2 + (uy - vy)^2)
 end
 
-coordinates = [(rand(), rand()) for _ in 1:10]
-UDG_embedding_loss(coordinates)
+@inline function distance(u::Tuple{T, T}, v::Tuple{T, T}) where T <: Real
+    return distance(u[1], u[2], v[1], v[2])
+end
+
+function UDG_embedding_loss(coordinates::Vector{T}, edges::Vector{Tuple{Int, Int}}, disjoint_edges::Vector{Tuple{Int, Int}}) where T <: Real
+    return sum(max(0, distance(coordinates[2u-1], coordinates[2u], coordinates[2v-1], coordinates[2v]) - 1) for (u, v) in edges) +
+        sum(max(0, 1 - distance(coordinates[2u-1], coordinates[2u], coordinates[2v-1], coordinates[2v])) for (u, v) in disjoint_edges)
+end
+
+function grad_UDG_embedding_loss!(grad, coordinates::Vector{T}) where T <: Real
+    grad .= 0.0
+    autodiff(Enzyme.Reverse, coordinates->UDG_embedding_loss(coordinates, edges, disjoint_edges), Active, Duplicated(coordinates, grad))
+    return nothing
+end
+
+@testset "HW10 Problem 2: Unit-disk Embedding" begin
+    n = length(vertices)
+    embedding_tolerance = 0.05
+    loss_atol = 0.01
+    trial = 10
+
+    for _ in 1:trial
+        coordinates = rand(2n) .- 0.5  
+
+        result = optimize(coordinates->UDG_embedding_loss(coordinates, edges, disjoint_edges), grad_UDG_embedding_loss!, coordinates, LBFGS(),
+                  Optim.Options(show_trace=false, iterations=2000, g_tol=1e-10))
+        
+        # UDG embedding found
+        if abs(Optim.minimum(result)) < loss_atol
+            optimized_coordinates = Optim.minimizer(result)
+            embedding = [(optimized_coordinates[2i-1], optimized_coordinates[2i]) for i in 1:n]
+
+            @info "UDG embedding found" embedding
+            for (u, v) in edges
+                @test distance(embedding[u], embedding[v]) ≤ 1 + embedding_tolerance
+            end
+            for (u, v) in disjoint_edges
+                @test distance(embedding[u], embedding[v]) ≥ 1 - embedding_tolerance
+            end
+
+            return
+        end
+    end
+
+    @warn "UDG embedding not found"
+end 
