@@ -1,0 +1,77 @@
+### 1. Reduction of Half Adder Circuit SAT to Spin Glass Ground State
+
+### Logic functions:
+- Sum: $ S = A \oplus B $
+- Carry: $ C = A \land B $
+
+### Spin encoding:
+Each Boolean variable $ x \in \{0,1\} $ is mapped to spin $ \sigma \in \{+1, -1\} $ via:
+$$
+x = \frac{1 - \sigma}{2}
+$$
+
+### Gate gadgets (from class materials):
+
+- **AND Gate**: 
+$ H_{\land}(A, B, C) = \frac{1}{4}(1 - \sigma_A)(1 - \sigma_B)(1 + \sigma_C)$
+
+- **XOR Gate**: 
+$
+H_{\oplus}(A, B, S) = \frac{1}{4}(1 - \sigma_A \sigma_B \sigma_S)
+$
+
+### Hamiltonian:
+$$
+H = \frac{1}{4}(1 - \sigma_A)(1 - \sigma_B)(1 + \sigma_C) + \frac{1}{4}(1 - \sigma_A \sigma_B \sigma_S).
+$$
+
+
+2.
+
+```julia
+bool_to_spin(x) = 1 - 2*x;
+spin_to_bool(σ) = (1 - σ) / 2;
+
+
+function H_and(σA, σB, σC)
+    return (1 - σA) * (1 - σB) * (1 + σC) / 4
+end
+
+function H_xor(σA, σB, σS)
+    return (1 - σA * σB * σS) / 4
+end
+
+
+function total_energy(σA, σB; σC=-1, σS=+1)
+    return H_and(σA, σB, σC) + H_xor(σA, σB, σS)
+end
+
+σS_fixed = bool_to_spin(0);
+σC_fixed = bool_to_spin(1);
+
+min_energy = Inf;
+solutions = [];
+
+for σA in [+1, -1], σB in [+1, -1]
+    E = total_energy(σA, σB; σC=σC_fixed, σS=σS_fixed);
+    if E < min_energy
+        min_energy = E;
+        empty!(solutions);
+        push!(solutions, (σA, σB));
+    elseif E == min_energy
+        push!(solutions, (σA, σB));
+    end
+end
+
+println("Fixed output: S = 0, C = 1")
+println("Minimum energy: ", min_energy)
+for (σA, σB) in solutions
+    A = spin_to_bool(σA);
+    B = spin_to_bool(σB);
+    println("Input A = $A, B = $B")
+end
+
+Minimum energy: 0.0
+Input A = 0.0, B = 0.0
+Input A = 1.0, B = 1.0
+```
