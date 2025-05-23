@@ -1,0 +1,11 @@
+name = "CrystalStructureOptimizer"
+version = "0.1.0"
+uuid = "8f9b3e36-5d87-4b6d-948e-4c222d0d4d83"
+authors = ["Your Name <you@example.com>"]
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+SCIP = "34c0e92e-8363-5c61-9e3b-9f99c70f9e78"
+MathOptInterface = "b8f27783-ece8-5eb3-8dc8-9495eed66fee"    
