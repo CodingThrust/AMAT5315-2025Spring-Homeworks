@@ -1,0 +1,77 @@
+1.
+```julia
+using SparseArrays
+
+rowindices = [3, 1, 1, 4, 5];
+colindices = [1, 2, 3, 3, 4];
+data       = [0.799, 0.942, 0.848, 0.164, 0.637];
+
+sp = sparse(rowindices, colindices, data, 5, 5);
+
+
+@show sp.colptr
+@show sp.rowval
+@show sp.nzval
+@show sp.m
+@show sp.n
+
+
+julia> @show sp.colptr
+sp.colptr = [1, 2, 3, 5, 6, 6]
+6-element Vector{Int64}:
+ 1
+ 2
+ 3
+ 5
+ 6
+ 6
+
+julia> @show sp.rowval
+sp.rowval = [3, 1, 1, 4, 5]
+5-element Vector{Int64}:
+ 3
+ 1
+ 1
+ 4
+ 5
+
+julia> @show sp.nzval
+sp.nzval = [0.799, 0.942, 0.848, 0.164, 0.637]
+5-element Vector{Float64}:
+ 0.799
+ 0.942
+ 0.848
+ 0.164
+ 0.637
+
+julia> @show sp.m
+sp.m = 5
+5
+
+julia> @show sp.n
+sp.n = 5
+5
+```
+
+2.
+```julia
+
+using Graphs, Random, SparseArrays, LinearAlgebra, KrylovKit
+
+Random.seed!(42);
+g = random_regular_graph(100000, 3);
+n = nv(g);
+
+A = adjacency_matrix(g);
+d = sum(A, dims=2);
+L = spdiagm(vec(d)) - A;
+
+vals, _ = eigsolve(L, 20, :SR);
+
+vals_array = collect(vals);
+num_components = count(abs.(vals_array) .< 1e-6);
+
+println("Number of connected components: ", num_components)
+Number of connected components: 0
+
+```
